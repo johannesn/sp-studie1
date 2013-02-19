@@ -1,0 +1,61 @@
+﻿<Window x:Class="Studie1.Animated"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Static Content" ResizeMode="NoResize" WindowState="Maximized" WindowStyle="None">
+    <Window.Resources>
+        <Storyboard x:Key="storyboard">
+            <DoubleAnimation From="0" To="-10" Duration="0:0:0.1" Storyboard.TargetName="mars" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
+            <DoubleAnimation From="0" To="-10" Duration="0:0:0.1" Storyboard.TargetName="snickers" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
+            <DoubleAnimation From="0" To="-10" Duration="0:0:0.1" Storyboard.TargetName="milkyway" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
+            <DoubleAnimation From="0" To="-10" Duration="0:0:0.1" Storyboard.TargetName="twix" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
+            <DoubleAnimation From="-10" To="10" BeginTime="0:0:0.1" RepeatBehavior="3x" AutoReverse="True" Duration="0:0:0.2" Storyboard.TargetName="mars" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
+            <DoubleAnimation From="-10" To="10" BeginTime="0:0:0.1" RepeatBehavior="3x" AutoReverse="True" Duration="0:0:0.2" Storyboard.TargetName="snickers" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
+            <DoubleAnimation From="-10" To="10" BeginTime="0:0:0.1" RepeatBehavior="3x" AutoReverse="True" Duration="0:0:0.2" Storyboard.TargetName="twix" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
+            <DoubleAnimation From="-10" To="10" BeginTime="0:0:0.1" RepeatBehavior="3x" AutoReverse="True" Duration="0:0:0.2" Storyboard.TargetName="milkyway" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
+            <DoubleAnimation From="-10" To="0" BeginTime="0:0:1.3" Duration="0:0:0.1" Storyboard.TargetName="mars" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
+            <DoubleAnimation From="-10" To="0" BeginTime="0:0:1.3" Duration="0:0:0.1" Storyboard.TargetName="snickers" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
+            <DoubleAnimation From="-10" To="0" BeginTime="0:0:1.3" Duration="0:0:0.1" Storyboard.TargetName="milkyway" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
+            <DoubleAnimation From="-10" To="0" BeginTime="0:0:1.3" Duration="0:0:0.1" Storyboard.TargetName="twix" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
+
+            <DoubleAnimation From="0" To="600" BeginTime="0:0:0.3" Duration="0:0:0.2" Storyboard.TargetName="stempel" Storyboard.TargetProperty="Width"></DoubleAnimation>
+            <DoubleAnimation From="0" To="600" BeginTime="0:0:0.3" Duration="0:0:0.2" Storyboard.TargetName="stempel" Storyboard.TargetProperty="Height"></DoubleAnimation>
+            <DoubleAnimation From="600" To="0" BeginTime="0:0:20.0" Duration="0:0:0.2" Storyboard.TargetName="stempel" Storyboard.TargetProperty="Width"></DoubleAnimation>
+            <DoubleAnimation From="600" To="0" BeginTime="0:0:20.0" Duration="0:0:0.2" Storyboard.TargetName="stempel" Storyboard.TargetProperty="Height"></DoubleAnimation>
+
+            <DoubleAnimation From="0" To="1" RepeatBehavior="7x" AutoReverse="True" Duration="0:0:0.1" Storyboard.TargetName="leuchtenderrahmen" Storyboard.TargetProperty="Opacity"></DoubleAnimation>
+
+        </Storyboard>
+    </Window.Resources>
+    
+    <Grid Width="1920" Height="1080">
+        <Image Height="1080" HorizontalAlignment="Left" Name="rahmen" Stretch="Fill" VerticalAlignment="Top" Width="1920" Source="/Studie1;component/Resources/rahmen.png"/>
+        <Image Height="1080" HorizontalAlignment="Left" Name="leuchtenderrahmen" Stretch="Fill" VerticalAlignment="Top" Width="1920" Opacity="0" Source="/Studie1;component/Resources/rahmen_leuchtend.png" MouseLeftButtonDown="mouseDown" />
+
+        <Image Height="200" HorizontalAlignment="Center" Name="mars" Stretch="Uniform" VerticalAlignment="Center" Width="400" Margin="967,100,553,780" Source="/Studie1;component/Resources/snickers.jpg" >
+            <Image.LayoutTransform>
+                <RotateTransform CenterX="0.5" CenterY="0.5" Angle="0"/>
+            </Image.LayoutTransform>
+        </Image>
+        <Image Height="200" HorizontalAlignment="Center" Name="snickers" Stretch="Uniform" VerticalAlignment="Center" Width="400" Source="/Studie1;component/Resources/twix.jpg" Margin="1408,200,112,680" >
+            <Image.LayoutTransform>
+                <RotateTransform CenterX="0.5" CenterY="0.5" Angle="0"/>
+            </Image.LayoutTransform>
+        </Image>
+        <Image Height="200" HorizontalAlignment="Center" Name="twix" Stretch="Uniform" VerticalAlignment="Center" Width="400" Source="/Studie1;component/Resources/mars.jpg" Margin="100,200,1420,680" >
+            <Image.LayoutTransform>
+                <RotateTransform CenterX="0.5" CenterY="0.5" Angle="0"/>
+            </Image.LayoutTransform>
+        </Image>
+        <Image Height="200" HorizontalAlignment="Center" Name="milkyway" Stretch="Uniform" VerticalAlignment="Center" Width="400" Source="/Studie1;component/Resources/milkyway.jpg" Margin="541,100,979,780" >
+            <Image.LayoutTransform>
+                <RotateTransform CenterX="0.5" CenterY="0.5" Angle="0"/>
+            </Image.LayoutTransform>
+        </Image>
+        
+        <Image Height="0" HorizontalAlignment="Center" Margin="649,344,671,136" Name="stempel" Stretch="Uniform" VerticalAlignment="Center" Width="0" Source="/Studie1;component/Resources/stempel.png" />
+        
+        <Image Height="400" HorizontalAlignment="Left" Margin="1357,644,0,0" Name="wegskizze" Stretch="Fill" VerticalAlignment="Top" Width="521" Source="/Studie1;component/Resources/table.png" />
+        <TextBlock Height="188" HorizontalAlignment="Left" Margin="100,694,0,0" Name="passwort" Text="Passwort: Studie" VerticalAlignment="Top" FontSize="72" FontFamily="Resources/4yeostamp.ttf#4YEOstamp" Width="400" TextWrapping="Wrap" TextAlignment="Center" Foreground="#FF951004" />
+        <TextBlock FontFamily="Resources/4yeostamp.ttf#4YEOstamp" FontSize="64" Foreground="#FF951004" Height="188" HorizontalAlignment="Left" Margin="1408,450,0,0" Name="wegbeschreibung" Text="Am Tisch hinten rechts" TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" />
+    </Grid>
+</Window>
