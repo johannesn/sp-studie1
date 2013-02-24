@@ -17,11 +17,15 @@ namespace Studie1
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml
     /// </summary>
-    public partial class Static : Window
+    public partial class Static : Window, Triggerable
     {
         public Static()
         {
             InitializeComponent();
+        }
+
+        public void triggerAction()
+        {
         }
     }
 }
