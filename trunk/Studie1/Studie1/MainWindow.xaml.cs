@@ -25,10 +25,13 @@ namespace Studie1
         private KinectSensor kinect;
         private Skeleton[] skeletonData;
         private Triggerable triggerable;
+        private enum AttractionTypes { NONE, STATIC, AUDITIV, ANIMATED, AVATAR };
+        private AttractionTypes attractionType;
 
         public MainWindow()
         {
             InitializeComponent();
+            attractionType = AttractionTypes.NONE;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -54,13 +57,15 @@ namespace Studie1
                     if (this.skeletonData.Length > 0 && triggerable != null)
                     {
                         int count = 0;
+                        List<Skeleton> skeletons = new List<Skeleton>();
 
                         foreach (Skeleton skeleton in this.skeletonData.Where(s => s.TrackingState != SkeletonTrackingState.NotTracked))
                         {
-                            if (skeleton.Position.Z < 1200)
-                            {
+                            //if (skeleton.Position.Z < 1200)
+                            //{
                                 count++;
-                            }
+                                skeletons.Add(skeleton);
+                            //}
                         }
 
                         System.Console.WriteLine("Skeleton Count = " + count);
@@ -68,6 +73,10 @@ namespace Studie1
                         if (count > 0)
                         {
                             triggerable.triggerAction();
+                            foreach (Skeleton s in skeletons)
+                            {
+                                System.Console.WriteLine(s.TrackingId + " " + s.Position.X + " " + s.Position.Y + " " + s.Position.Z);
+                            }
                         }
                     }
                 }
@@ -76,30 +85,70 @@ namespace Studie1
 
         private void animated_Click(object sender, RoutedEventArgs e)
         {
-            Animated animatedWindow = new Animated();
-            animatedWindow.Show();
-            this.triggerable = animatedWindow;
+            if (triggerable != null)
+            {
+                (triggerable as Window).Close();
+                triggerable = null;
+                attractionType = AttractionTypes.NONE;
+            }
+            else
+            {
+                Animated animatedWindow = new Animated();
+                animatedWindow.Show();
+                this.triggerable = animatedWindow;
+                attractionType = AttractionTypes.ANIMATED;
+            }
         }
 
         private void static_Click(object sender, RoutedEventArgs e)
         {
-            Static staticWindow = new Static();
-            staticWindow.Show();
-            this.triggerable = staticWindow;
+            if (triggerable != null)
+            {
+                (triggerable as Window).Close();
+                triggerable = null;
+                attractionType = AttractionTypes.NONE;
+            }
+            else
+            {
+                Static staticWindow = new Static();
+                staticWindow.Show();
+                this.triggerable = staticWindow;
+                attractionType = AttractionTypes.STATIC;
+            }
         }
 
         private void auditiv_Click(object sender, RoutedEventArgs e)
         {
-            Auditiv auditivWindow = new Auditiv();
-            auditivWindow.Show();
-            this.triggerable = auditivWindow;
+            if (triggerable != null)
+            {
+                (triggerable as Window).Close();
+                triggerable = null;
+                attractionType = AttractionTypes.NONE;
+            }
+            else
+            {
+                Auditiv auditivWindow = new Auditiv();
+                auditivWindow.Show();
+                this.triggerable = auditivWindow;
+                attractionType = AttractionTypes.AUDITIV;
+            }
         }
 
         private void avatar_Click(object sender, RoutedEventArgs e)
         {
-            Avatar avatarWindow = new Avatar();
-            avatarWindow.Show();
-            this.triggerable = avatarWindow;
+            if (triggerable != null)
+            {
+                (triggerable as Window).Close();
+                triggerable = null;
+                attractionType = AttractionTypes.NONE;
+            }
+            else
+            {
+                Avatar avatarWindow = new Avatar();
+                avatarWindow.Show();
+                this.triggerable = avatarWindow;
+                attractionType = AttractionTypes.AVATAR;
+            }
         }
 
     }

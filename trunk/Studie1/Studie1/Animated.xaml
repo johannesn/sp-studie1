@@ -3,26 +3,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Static Content" ResizeMode="NoResize" WindowState="Maximized" WindowStyle="None">
     <Window.Resources>
-        <Storyboard x:Key="storyboard">
+        <Storyboard x:Key="storyboard" BeginTime="0:0:2">
             <DoubleAnimation From="0" To="-10" Duration="0:0:0.1" Storyboard.TargetName="mars" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
             <DoubleAnimation From="0" To="-10" Duration="0:0:0.1" Storyboard.TargetName="snickers" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
             <DoubleAnimation From="0" To="-10" Duration="0:0:0.1" Storyboard.TargetName="milkyway" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
             <DoubleAnimation From="0" To="-10" Duration="0:0:0.1" Storyboard.TargetName="twix" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
-            <DoubleAnimation From="-10" To="10" BeginTime="0:0:0.1" RepeatBehavior="3x" AutoReverse="True" Duration="0:0:0.2" Storyboard.TargetName="mars" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
-            <DoubleAnimation From="-10" To="10" BeginTime="0:0:0.1" RepeatBehavior="3x" AutoReverse="True" Duration="0:0:0.2" Storyboard.TargetName="snickers" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
-            <DoubleAnimation From="-10" To="10" BeginTime="0:0:0.1" RepeatBehavior="3x" AutoReverse="True" Duration="0:0:0.2" Storyboard.TargetName="twix" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
-            <DoubleAnimation From="-10" To="10" BeginTime="0:0:0.1" RepeatBehavior="3x" AutoReverse="True" Duration="0:0:0.2" Storyboard.TargetName="milkyway" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
-            <DoubleAnimation From="-10" To="0" BeginTime="0:0:1.3" Duration="0:0:0.1" Storyboard.TargetName="mars" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
-            <DoubleAnimation From="-10" To="0" BeginTime="0:0:1.3" Duration="0:0:0.1" Storyboard.TargetName="snickers" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
-            <DoubleAnimation From="-10" To="0" BeginTime="0:0:1.3" Duration="0:0:0.1" Storyboard.TargetName="milkyway" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
-            <DoubleAnimation From="-10" To="0" BeginTime="0:0:1.3" Duration="0:0:0.1" Storyboard.TargetName="twix" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
+            <DoubleAnimation From="-10" To="10" BeginTime="0:0:0.1" RepeatBehavior="99x" AutoReverse="True" Duration="0:0:0.2" Storyboard.TargetName="mars" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
+            <DoubleAnimation From="-10" To="10" BeginTime="0:0:0.1" RepeatBehavior="99x" AutoReverse="True" Duration="0:0:0.2" Storyboard.TargetName="snickers" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
+            <DoubleAnimation From="-10" To="10" BeginTime="0:0:0.1" RepeatBehavior="99x" AutoReverse="True" Duration="0:0:0.2" Storyboard.TargetName="twix" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
+            <DoubleAnimation From="-10" To="10" BeginTime="0:0:0.1" RepeatBehavior="99x" AutoReverse="True" Duration="0:0:0.2" Storyboard.TargetName="milkyway" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
+            <DoubleAnimation From="-10" To="0" BeginTime="0:0:19.9" Duration="0:0:0.1" Storyboard.TargetName="mars" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
+            <DoubleAnimation From="-10" To="0" BeginTime="0:0:19.9" Duration="0:0:0.1" Storyboard.TargetName="snickers" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
+            <DoubleAnimation From="-10" To="0" BeginTime="0:0:19.9" Duration="0:0:0.1" Storyboard.TargetName="milkyway" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
+            <DoubleAnimation From="-10" To="0" BeginTime="0:0:19.9" Duration="0:0:0.1" Storyboard.TargetName="twix" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
 
             <DoubleAnimation From="0" To="600" BeginTime="0:0:0.3" Duration="0:0:0.2" Storyboard.TargetName="stempel" Storyboard.TargetProperty="Width"></DoubleAnimation>
             <DoubleAnimation From="0" To="600" BeginTime="0:0:0.3" Duration="0:0:0.2" Storyboard.TargetName="stempel" Storyboard.TargetProperty="Height"></DoubleAnimation>
             <DoubleAnimation From="600" To="0" BeginTime="0:0:20.0" Duration="0:0:0.2" Storyboard.TargetName="stempel" Storyboard.TargetProperty="Width"></DoubleAnimation>
             <DoubleAnimation From="600" To="0" BeginTime="0:0:20.0" Duration="0:0:0.2" Storyboard.TargetName="stempel" Storyboard.TargetProperty="Height"></DoubleAnimation>
 
-            <DoubleAnimation From="0" To="1" RepeatBehavior="7x" AutoReverse="True" Duration="0:0:0.1" Storyboard.TargetName="leuchtenderrahmen" Storyboard.TargetProperty="Opacity"></DoubleAnimation>
+            <DoubleAnimation From="0" To="1" RepeatBehavior="100x" AutoReverse="True" Duration="0:0:0.1" Storyboard.TargetName="leuchtenderrahmen" Storyboard.TargetProperty="Opacity"></DoubleAnimation>
 
         </Storyboard>
     </Window.Resources>
