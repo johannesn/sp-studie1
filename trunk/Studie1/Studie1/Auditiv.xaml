@@ -3,6 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Auditiv Content" ResizeMode="NoResize" WindowState="Maximized" WindowStyle="None">
     <Grid Width="1920" Height="1080" >
-        <Image Height="1080" HorizontalAlignment="Left" Margin="0,0,0,0" Name="image1" Stretch="Fill" VerticalAlignment="Top" Width="1920" MouseLeftButtonDown="mouseButtonDown" />
+        <Image Height="1080" HorizontalAlignment="Left" Name="leer" Stretch="Fill" VerticalAlignment="Top" Width="1920" Opacity="0" MouseLeftButtonDown="mouseButtonDown" Source="/Studie1;component/Resources/rahmen_leuchtend.png" />
     </Grid>
 </Window>
