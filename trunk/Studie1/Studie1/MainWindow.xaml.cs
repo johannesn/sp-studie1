@@ -12,6 +12,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Kinect;
+using Studie1Avatar;
+using Schnittstellen;
 
 namespace Studie1
 {
@@ -63,8 +65,8 @@ namespace Studie1
                         {
                             //if (skeleton.Position.Z < 1200)
                             //{
-                                count++;
-                                skeletons.Add(skeleton);
+                            count++;
+                            skeletons.Add(skeleton);
                             //}
                         }
 
@@ -144,9 +146,9 @@ namespace Studie1
             }
             else
             {
-                Avatar avatarWindow = new Avatar();
-                avatarWindow.Show();
-                this.triggerable = avatarWindow;
+                Avatar game = new Avatar();
+                game.Run();
+                this.triggerable = game;
                 attractionType = AttractionTypes.AVATAR;
             }
         }

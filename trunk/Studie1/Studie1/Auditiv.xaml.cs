@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Media;
 using System.IO;
 using System.Threading;
+using Schnittstellen;
 
 namespace Studie1
 {
