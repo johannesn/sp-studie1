@@ -26,7 +26,7 @@ namespace Studie1
             InitializeComponent();
         }
 
-        public void triggerAction(Skeleton[] skeletonData)
+        public void triggerAction(List<Skeleton> skeletonData)
         {
         }
     }
