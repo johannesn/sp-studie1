@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Schnittstellen;
+using Microsoft.Kinect;
 
 namespace Studie1Avatar
 {
@@ -31,7 +32,6 @@ namespace Studie1Avatar
         }
 
         Quad quad;
-        VertexDeclaration vertexDeclaration;
         Matrix View, Projection, World;
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
@@ -41,8 +41,8 @@ namespace Studie1Avatar
         /// </summary>
         protected override void Initialize()
         {
-            quad = new Quad(Vector3.Zero, Vector3.Backward, Vector3.Up, 1, 1);
-            View = Matrix.CreateLookAt(new Vector3(1, 0, 2), Vector3.Zero,
+            quad = new Quad(new Vector3(2, 2, 5), Vector3.Left, Vector3.Up, 1, 1);
+            View = Matrix.CreateLookAt(new Vector3(-2, 2, 5), quad.Origin,
                 Vector3.Up);
             Projection = Matrix.CreatePerspectiveFieldOfView(
                 MathHelper.PiOver4, 4.0f / 3.0f, 1, 500);
@@ -69,20 +69,12 @@ namespace Studie1Avatar
             texture = Content.Load<Texture2D>("face");
             quadEffect = new BasicEffect(graphics.GraphicsDevice);
 
-            quadEffect.World = Matrix.Identity;
+            quadEffect.World = World;
             quadEffect.View = View;
             quadEffect.Projection = Projection;
             quadEffect.TextureEnabled = true;
             quadEffect.Texture = texture;
             quadEffect.VertexColorEnabled = false;
-
-            vertexDeclaration = new VertexDeclaration(new VertexElement[]
-                {
-                    new VertexElement(0, VertexElementFormat.Vector3, VertexElementUsage.Position, 0),
-                    new VertexElement(12, VertexElementFormat.Vector3, VertexElementUsage.Normal, 0),
-                    new VertexElement(24, VertexElementFormat.Vector2, VertexElementUsage.TextureCoordinate, 0)
-                }
-            );
 
             background = Content.Load<Texture2D>("avatar_bg");
             int screenWidth = graphics.GraphicsDevice.PresentationParameters.BackBufferWidth;
@@ -107,18 +99,29 @@ namespace Studie1Avatar
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
 
             // TODO: Add your update logic here
 
-            float l = 2.0f;
-            float b = (float)Math.PI * (gameTime.TotalGameTime.Milliseconds - 500) / 1000.0f;
-            float x = (float)Math.Sin(b) * l;
-            float y = (float)Math.Cos(b) * l;
+            //float l = 2.0f;
+            //float x = (float)Math.Sin(b) * l;
+            //float y = (float)Math.Cos(b) * l;
             //View = Matrix.CreateLookAt(new Vector3(x, 0, y), Vector3.Zero, Vector3.Up);
 
-            Matrix.CreateRotationY(b, out World);
+            //Matrix.CreateRotationY(b, out World);
+            
+            if (person != null)
+            {
+                Vector3 display_to_person = -1 * (quad.Origin - person);
+                display_to_person.Normalize();
+                /* Vector2 ptod_xz = new Vector2(ptod.X, ptod.Z);
+                float a = (float)(Math.PI / 2 - Math.Cos(-ptod.Z) / ptod_xz.Length());
+                System.Console.WriteLine(a);
+                Vector3 rot = new Vector3((float)Math.Cos(a) * 1.0f, 0.0f, (float)Math.Sin(a) * 1.0f);*/
+
+                quad = new Quad(new Vector3(2, 2, 5), display_to_person, Vector3.Up, 1, 1);
+            }
 
             base.Update(gameTime);
         }
@@ -132,14 +135,9 @@ namespace Studie1Avatar
             GraphicsDevice.Clear(Color.White);
 
             spriteBatch.Begin();
-            Vector2 pos = new Vector2(borders.Left, borders.Top);
             spriteBatch.Draw(background, borders, Color.White);
             spriteBatch.End();
 
-            quadEffect.View = View;
-            quadEffect.World = World;
-
-            // TODO: Add your drawing code here
             foreach (EffectPass pass in quadEffect.CurrentTechnique.Passes)
             {
                 pass.Apply();
@@ -154,8 +152,13 @@ namespace Studie1Avatar
             base.Draw(gameTime);
         }
 
-        public void triggerAction()
+        Vector3 person;
+        public void triggerAction(Skeleton[] skeletonData)
         {
+            if (skeletonData.Length > 0)
+            {
+                person = new Vector3(skeletonData[0].Position.X, skeletonData[0].Position.Y, skeletonData[0].Position.Z);
+            }
         }
     }
 
