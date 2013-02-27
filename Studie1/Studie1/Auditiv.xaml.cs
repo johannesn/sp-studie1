@@ -31,9 +31,9 @@ namespace Studie1
             InitializeComponent();
         }
 
-        public void triggerAction(Skeleton[] skeletonData)
+        public void triggerAction(List<Skeleton> skeletonData)
         {
-            if (newThread==null || !newThread.IsAlive)
+            if ((newThread == null || !newThread.IsAlive) && skeletonData.Count > 0)
             {
                 newThread = new Thread(this.playSound);
                 newThread.Start(); 

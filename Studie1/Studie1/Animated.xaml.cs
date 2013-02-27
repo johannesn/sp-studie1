@@ -34,9 +34,9 @@ namespace Studie1
             isAnimating = false;
         }
 
-        public void triggerAction(Skeleton[] skeletonData)
+        public void triggerAction(List<Skeleton> skeletonData)
         {
-            if (!isAnimating)
+            if (!isAnimating && skeletonData.Count>0)
             {
                 storyboard.Begin(this);
                 isAnimating = true;
