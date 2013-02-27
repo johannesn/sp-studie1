@@ -41,14 +41,16 @@ namespace Studie1Avatar
         /// </summary>
         protected override void Initialize()
         {
-            quad = new Quad(new Vector3(2, 2, 5), Vector3.Left, Vector3.Up, 1, 1);
-            View = Matrix.CreateLookAt(new Vector3(-2, 2, 5), quad.Origin,
+            quad = new Quad(new Vector3(0.8f, 0.0f, 2.4f), Vector3.Left, Vector3.Up, 1, 1);
+            View = Matrix.CreateLookAt(new Vector3(-quad.Origin.X, quad.Origin.Y, quad.Origin.Z), quad.Origin,
                 Vector3.Up);
             Projection = Matrix.CreatePerspectiveFieldOfView(
                 MathHelper.PiOver4, 4.0f / 3.0f, 1, 500);
             World = Matrix.Identity;
 
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
+
+            persons = new List<Vector3>();
 
             base.Initialize();
         }
@@ -110,17 +112,19 @@ namespace Studie1Avatar
             //View = Matrix.CreateLookAt(new Vector3(x, 0, y), Vector3.Zero, Vector3.Up);
 
             //Matrix.CreateRotationY(b, out World);
-            
-            if (person != null)
+
+            if (persons.Count>0)
             {
+                Vector3 person = persons.First<Vector3>();
                 Vector3 display_to_person = -1 * (quad.Origin - person);
                 display_to_person.Normalize();
+                System.Console.WriteLine(display_to_person);
                 /* Vector2 ptod_xz = new Vector2(ptod.X, ptod.Z);
                 float a = (float)(Math.PI / 2 - Math.Cos(-ptod.Z) / ptod_xz.Length());
                 System.Console.WriteLine(a);
                 Vector3 rot = new Vector3((float)Math.Cos(a) * 1.0f, 0.0f, (float)Math.Sin(a) * 1.0f);*/
 
-                quad = new Quad(new Vector3(2, 2, 5), display_to_person, Vector3.Up, 1, 1);
+                quad = new Quad(quad.Origin, display_to_person, Vector3.Up, 1, 1);
             }
 
             base.Update(gameTime);
@@ -152,12 +156,13 @@ namespace Studie1Avatar
             base.Draw(gameTime);
         }
 
-        Vector3 person;
-        public void triggerAction(Skeleton[] skeletonData)
+        List<Vector3> persons;
+        public void triggerAction(List<Skeleton> skeletonData)
         {
-            if (skeletonData.Length > 0)
+            persons.RemoveRange(0, persons.Count);
+            foreach (Skeleton s in skeletonData)
             {
-                person = new Vector3(skeletonData[0].Position.X, skeletonData[0].Position.Y, skeletonData[0].Position.Z);
+                persons.Add(new Vector3(s.Position.X, s.Position.Y, s.Position.Z));
             }
         }
     }
