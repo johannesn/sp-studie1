@@ -75,10 +75,10 @@ namespace Studie1
                         if (count > 0)
                         {
                             triggerable.triggerAction(skeletons);
-                            foreach (Skeleton s in skeletons)
+                            /*foreach (Skeleton s in skeletons)
                             {
                                 System.Console.WriteLine(s.TrackingId + " " + s.Position.X + " " + s.Position.Y + " " + s.Position.Z);
-                            }
+                            }*/
                         }
                     }
                 }
