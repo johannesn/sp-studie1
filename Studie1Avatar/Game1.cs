@@ -41,7 +41,7 @@ namespace Studie1Avatar
         /// </summary>
         protected override void Initialize()
         {
-            quad = new Quad(new Vector3(0.8f, 0.0f, 2.4f), Vector3.Left, Vector3.Up, 1, 1);
+            quad = new Quad(new Vector3(-0.8f, 0.0f, 2.4f), Vector3.Left, Vector3.Up, 1, 1);
             View = Matrix.CreateLookAt(new Vector3(-quad.Origin.X, quad.Origin.Y, quad.Origin.Z), quad.Origin,
                 Vector3.Up);
             Projection = Matrix.CreatePerspectiveFieldOfView(
@@ -113,12 +113,12 @@ namespace Studie1Avatar
 
             //Matrix.CreateRotationY(b, out World);
 
-            if (persons.Count>0)
+            if (persons.Count > 0)
             {
                 Vector3 person = persons.First<Vector3>();
                 Vector3 display_to_person = -1 * (quad.Origin - person);
+                System.Console.WriteLine(quad.Origin + " " + person + " " + display_to_person);
                 display_to_person.Normalize();
-                System.Console.WriteLine(display_to_person);
                 /* Vector2 ptod_xz = new Vector2(ptod.X, ptod.Z);
                 float a = (float)(Math.PI / 2 - Math.Cos(-ptod.Z) / ptod_xz.Length());
                 System.Console.WriteLine(a);
