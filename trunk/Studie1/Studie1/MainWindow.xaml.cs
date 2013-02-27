@@ -29,11 +29,13 @@ namespace Studie1
         private Triggerable triggerable;
         private enum AttractionTypes { NONE, STATIC, AUDITIV, ANIMATED, AVATAR };
         private AttractionTypes attractionType;
+        private Dictionary<int, bool> ids;
 
         public MainWindow()
         {
             InitializeComponent();
             attractionType = AttractionTypes.NONE;
+            ids = new Dictionary<int, bool>();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -67,8 +69,24 @@ namespace Studie1
                             //{
                             count++;
                             skeletons.Add(skeleton);
+                            if (!ids[skeleton.TrackingId])
+                            {
+                                this.userEntered(skeleton.TrackingId);
+                                ids[skeleton.TrackingId] = true;
+                            }
                             //}
                         }
+
+                        foreach (Skeleton skeleton in this.skeletonData.Where(s => s.TrackingState == SkeletonTrackingState.NotTracked))
+                        {
+                            if (!ids[skeleton.TrackingId])
+                            {
+                                this.userLeft(skeleton.TrackingId);
+                                ids[skeleton.TrackingId] = false;
+                            }
+                        }
+
+
 
                         //System.Console.WriteLine("Skeleton Count = " + count);
 
@@ -83,6 +101,16 @@ namespace Studie1
                     }
                 }
             }
+        }
+
+        private void userLeft(int id)
+        {
+            System.Console.WriteLine("User left: " + id);
+        }
+
+        private void userEntered(int id)
+        {
+            System.Console.WriteLine("User entered: " + id);
         }
 
         private void animated_Click(object sender, RoutedEventArgs e)
