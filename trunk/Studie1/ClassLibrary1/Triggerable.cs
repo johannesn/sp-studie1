@@ -8,6 +8,6 @@ namespace Schnittstellen
 {
     public interface Triggerable
     {
-        void triggerAction(Skeleton[] skeletonData);
+        void triggerAction(List<Skeleton> skeletons);
     }
 }
