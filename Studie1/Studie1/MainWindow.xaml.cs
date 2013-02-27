@@ -70,11 +70,11 @@ namespace Studie1
                             //}
                         }
 
-                        System.Console.WriteLine("Skeleton Count = " + count);
+                        //System.Console.WriteLine("Skeleton Count = " + count);
 
                         if (count > 0)
                         {
-                            triggerable.triggerAction();
+                            triggerable.triggerAction(skeletonData);
                             foreach (Skeleton s in skeletons)
                             {
                                 System.Console.WriteLine(s.TrackingId + " " + s.Position.X + " " + s.Position.Y + " " + s.Position.Z);
@@ -140,15 +140,15 @@ namespace Studie1
         {
             if (triggerable != null)
             {
-                (triggerable as Window).Close();
+                (triggerable as Avatar).Exit();
                 triggerable = null;
                 attractionType = AttractionTypes.NONE;
             }
             else
             {
                 Avatar game = new Avatar();
-                game.Run();
                 this.triggerable = game;
+                game.Run();
                 attractionType = AttractionTypes.AVATAR;
             }
         }

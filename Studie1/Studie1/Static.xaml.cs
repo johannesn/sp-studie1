@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Schnittstellen;
+using Microsoft.Kinect;
 
 namespace Studie1
 {
@@ -25,7 +26,7 @@ namespace Studie1
             InitializeComponent();
         }
 
-        public void triggerAction()
+        public void triggerAction(Skeleton[] skeletonData)
         {
         }
     }
