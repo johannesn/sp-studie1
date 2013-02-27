@@ -117,7 +117,7 @@ namespace Studie1Avatar
             {
                 Vector3 person = persons.First<Vector3>();
                 Vector3 display_to_person = -1 * (quad.Origin - person);
-                //System.Console.WriteLine(quad.Origin + " " + person + " " + display_to_person);
+                System.Console.WriteLine(quad.Origin + " " + person + " " + display_to_person);
                 display_to_person.Normalize();
                 /* Vector2 ptod_xz = new Vector2(ptod.X, ptod.Z);
                 float a = (float)(Math.PI / 2 - Math.Cos(-ptod.Z) / ptod_xz.Length());
@@ -162,7 +162,14 @@ namespace Studie1Avatar
             persons.RemoveRange(0, persons.Count);
             foreach (Skeleton s in skeletonData)
             {
-                persons.Add(new Vector3(s.Joints[JointType.Head].Position.X, s.Joints[JointType.Head].Position.Y, s.Joints[JointType.Head].Position.Z));
+                if (s.Joints[JointType.Head].TrackingState == JointTrackingState.Tracked || s.Joints[JointType.Head].TrackingState == JointTrackingState.Inferred)
+                {
+                    persons.Add(new Vector3(s.Joints[JointType.Head].Position.X, s.Joints[JointType.Head].Position.Y, s.Joints[JointType.Head].Position.Z));
+                }
+                else
+                {
+                    persons.Add(new Vector3(s.Position.X, s.Position.Y * 2, s.Position.Z));
+                }
             }
         }
     }
