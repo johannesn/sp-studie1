@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 using Schnittstellen;
+using Microsoft.Kinect;
 
 namespace Studie1
 {
@@ -33,7 +34,7 @@ namespace Studie1
             isAnimating = false;
         }
 
-        public void triggerAction()
+        public void triggerAction(Skeleton[] skeletonData)
         {
             if (!isAnimating)
             {
@@ -49,7 +50,7 @@ namespace Studie1
 
         private void mouseDown(object sender, MouseButtonEventArgs e)
         {
-            triggerAction();
+            triggerAction(null);
         }
     }
 }

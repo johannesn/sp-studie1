@@ -15,6 +15,7 @@ using System.Media;
 using System.IO;
 using System.Threading;
 using Schnittstellen;
+using Microsoft.Kinect;
 
 namespace Studie1
 {
@@ -30,7 +31,7 @@ namespace Studie1
             InitializeComponent();
         }
 
-        public void triggerAction()
+        public void triggerAction(Skeleton[] skeletonData)
         {
             if (newThread==null || !newThread.IsAlive)
             {
@@ -41,7 +42,7 @@ namespace Studie1
 
         private void mouseButtonDown(object sender, MouseButtonEventArgs e)
         {
-            triggerAction();
+            triggerAction(null);
         }
 
         private void playSound()
