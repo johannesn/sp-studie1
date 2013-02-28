@@ -13,6 +13,7 @@ using Microsoft.Kinect;
 
 namespace Studie1Avatar
 {
+
     /// <summary>
     /// This is the main type for your game
     /// </summary>
@@ -20,18 +21,27 @@ namespace Studie1Avatar
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        static const int width = 1920;
+        static const int height = 1920;
+        static const float smileyWidth = 300.0f / width;
+        static const float smileyHeight = 300.0f / width;
+        static const Vector3 displayOrigin = new Vector3(-0.8f, 0.0f, 2.4f);
+
 
         public Avatar()
         {
             graphics = new GraphicsDeviceManager(this);
-            this.graphics.PreferredBackBufferWidth = 1920;
-            this.graphics.PreferredBackBufferHeight = 1080;
+            this.graphics.PreferredBackBufferWidth = Avatar.width;
+            this.graphics.PreferredBackBufferHeight = Avatar.height;
+
+            smileys = new List<Quad>();
+            persons = new List<Vector3>();
 
             this.graphics.IsFullScreen = true;
             Content.RootDirectory = "Content";
         }
 
-        Quad quad;
+        List<Quad> smileys;
         Matrix View, Projection, World;
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
@@ -41,16 +51,13 @@ namespace Studie1Avatar
         /// </summary>
         protected override void Initialize()
         {
-            quad = new Quad(new Vector3(-0.8f, 0.0f, 2.4f), Vector3.Left, Vector3.Up, 300.0f / 1920.0f, 300.0f / 1920.0f);
-            View = Matrix.CreateLookAt(new Vector3(quad.Origin.X+2, quad.Origin.Y, quad.Origin.Z), quad.Origin,
+            View = Matrix.CreateLookAt(new Vector3(displayOrigin.X + 2, displayOrigin.Y, displayOrigin.Z), displayOrigin,
                 Vector3.Up);
             Projection = Matrix.CreatePerspectiveFieldOfView(
                 MathHelper.PiOver2, 4.0f / 3.0f, 1, 500);
             World = Matrix.Identity;
 
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
-
-            persons = new List<Vector3>();
 
             base.Initialize();
         }
@@ -69,6 +76,7 @@ namespace Studie1Avatar
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             texture = Content.Load<Texture2D>("face");
+
             quadEffect = new BasicEffect(graphics.GraphicsDevice);
 
             quadEffect.World = World;
@@ -104,28 +112,22 @@ namespace Studie1Avatar
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
 
-            // TODO: Add your update logic here
-
-            //float l = 2.0f;
-            //float x = (float)Math.Sin(b) * l;
-            //float y = (float)Math.Cos(b) * l;
-            //View = Matrix.CreateLookAt(new Vector3(x, 0, y), Vector3.Zero, Vector3.Up);
-
-            //Matrix.CreateRotationY(b, out World);
-
+            smileys.RemoveRange(0, smileys.Count);
             if (persons.Count > 0)
             {
-                Vector3 person = persons.First<Vector3>();
-                Vector3 display_to_person = -1 * (quad.Origin - person);
-                //System.Console.WriteLine(quad.Origin + " " + person + " " + display_to_person);
-                display_to_person.Normalize();
-                /* Vector2 ptod_xz = new Vector2(ptod.X, ptod.Z);
-                float a = (float)(Math.PI / 2 - Math.Cos(-ptod.Z) / ptod_xz.Length());
-                System.Console.WriteLine(a);
-                Vector3 rot = new Vector3((float)Math.Cos(a) * 1.0f, 0.0f, (float)Math.Sin(a) * 1.0f);*/
+                int smileyIndex = 0;
+                float simleyRegionWidth = 1.0f / smileys.Count;
+                float smileyOffset = simleyRegionWidth / 2;
+                foreach (Vector3 person in persons)
+                {
+                    Vector3 smileyOrigin = new Vector3(Avatar.displayOrigin.X, Avatar.displayOrigin.Y, Avatar.displayOrigin.Z + simleyRegionWidth * smileyIndex + smileyOffset);
+                    Vector3 display_to_person = -1 * (smileyOrigin - person);
+                    smileys.Add(new Quad(smileyOrigin, display_to_person, Vector3.Up, Avatar.smileyWidth, Avatar.smileyHeight));
 
-                quad = new Quad(quad.Origin, display_to_person, Vector3.Up, 1, 1);
+                    smileyIndex++;
+                }
             }
+
 
             base.Update(gameTime);
         }
@@ -146,11 +148,14 @@ namespace Studie1Avatar
             {
                 pass.Apply();
 
-                GraphicsDevice.DrawUserIndexedPrimitives
-                    <VertexPositionColorTexture>(
-                    PrimitiveType.TriangleList,
-                    quad.Vertices, 0, 4,
-                    quad.Indices, 0, 2);
+                foreach (Quad smiley in smileys)
+                {
+                    GraphicsDevice.DrawUserIndexedPrimitives
+                        <VertexPositionColorTexture>(
+                        PrimitiveType.TriangleList,
+                        smiley.Vertices, 0, 4,
+                        smiley.Indices, 0, 2);
+                }
             }
 
             base.Draw(gameTime);
