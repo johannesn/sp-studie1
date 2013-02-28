@@ -29,13 +29,13 @@ namespace Studie1
         private Triggerable triggerable;
         private enum AttractionTypes { NONE, STATIC, AUDITIV, ANIMATED, AVATAR };
         private AttractionTypes attractionType;
-        private Dictionary<int, bool> ids;
+        private List<int> lastUsers;
 
         public MainWindow()
         {
             InitializeComponent();
             attractionType = AttractionTypes.NONE;
-            ids = new Dictionary<int, bool>();
+            lastUsers = new List<int>();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -62,41 +62,35 @@ namespace Studie1
                     {
                         int count = 0;
                         List<Skeleton> skeletons = new List<Skeleton>();
+                        List<int> remaining = new List<int>();
+                        remaining.AddRange(lastUsers);
 
                         foreach (Skeleton skeleton in this.skeletonData.Where(s => s.TrackingState != SkeletonTrackingState.NotTracked))
                         {
-                            //if (skeleton.Position.Z < 1200)
-                            //{
                             count++;
                             skeletons.Add(skeleton);
-                            if (!ids[skeleton.TrackingId])
+                            remaining.Remove(skeleton.TrackingId);
+                            if (!lastUsers.Contains(skeleton.TrackingId))
                             {
                                 this.userEntered(skeleton.TrackingId);
-                                ids[skeleton.TrackingId] = true;
                             }
-                            //}
                         }
 
-                        foreach (Skeleton skeleton in this.skeletonData.Where(s => s.TrackingState == SkeletonTrackingState.NotTracked))
+                        lastUsers.RemoveRange(0, lastUsers.Count);
+
+                        foreach (Skeleton s in skeletons)
                         {
-                            if (!ids[skeleton.TrackingId])
-                            {
-                                this.userLeft(skeleton.TrackingId);
-                                ids[skeleton.TrackingId] = false;
-                            }
+                            lastUsers.Add(s.TrackingId);
                         }
 
-
-
-                        //System.Console.WriteLine("Skeleton Count = " + count);
+                        foreach (int id in remaining)
+                        {
+                            this.userLeft(id);
+                        }
 
                         if (count > 0)
                         {
                             triggerable.triggerAction(skeletons);
-                            /*foreach (Skeleton s in skeletons)
-                            {
-                                System.Console.WriteLine(s.TrackingId + " " + s.Position.X + " " + s.Position.Y + " " + s.Position.Z);
-                            }*/
                         }
                     }
                 }
