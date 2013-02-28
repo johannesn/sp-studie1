@@ -17,6 +17,7 @@ using Schnittstellen;
 
 namespace Studie1
 {
+    public enum AttractionTypes { NONE, STATIC, AUDITIV, ANIMATED, AVATAR };
 
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml
@@ -27,15 +28,17 @@ namespace Studie1
         private KinectSensor kinect;
         private Skeleton[] skeletonData;
         private Triggerable triggerable;
-        private enum AttractionTypes { NONE, STATIC, AUDITIV, ANIMATED, AVATAR };
         private AttractionTypes attractionType;
         private List<int> lastUsers;
+        private Logger logger;
 
         public MainWindow()
         {
             InitializeComponent();
             attractionType = AttractionTypes.NONE;
             lastUsers = new List<int>();
+
+            logger = new Logger();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -100,11 +103,13 @@ namespace Studie1
         private void userLeft(int id, DateTime time)
         {
             System.Console.WriteLine("User left: " + id);
+            logger.addRow(attractionType, id, time, false);
         }
 
         private void userEntered(int id, DateTime time)
         {
             System.Console.WriteLine("User entered: " + id);
+            logger.addRow(attractionType, id, time, true);
         }
 
         private void animated_Click(object sender, RoutedEventArgs e)
