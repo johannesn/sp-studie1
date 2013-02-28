@@ -41,11 +41,11 @@ namespace Studie1Avatar
         /// </summary>
         protected override void Initialize()
         {
-            quad = new Quad(new Vector3(-0.8f, 0.0f, 2.4f), Vector3.Left, Vector3.Up, 1, 1);
-            View = Matrix.CreateLookAt(new Vector3(-quad.Origin.X, quad.Origin.Y, quad.Origin.Z), quad.Origin,
+            quad = new Quad(new Vector3(-0.8f, 0.0f, 2.4f), Vector3.Left, Vector3.Up, 100.0f / 1090.0f, 100.0f / 1090.0f);
+            View = Matrix.CreateLookAt(new Vector3(quad.Origin.X+2, quad.Origin.Y, quad.Origin.Z), quad.Origin,
                 Vector3.Up);
             Projection = Matrix.CreatePerspectiveFieldOfView(
-                MathHelper.PiOver4, 4.0f / 3.0f, 1, 500);
+                MathHelper.PiOver2, 4.0f / 3.0f, 1, 500);
             World = Matrix.Identity;
 
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
