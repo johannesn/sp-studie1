@@ -72,7 +72,7 @@ namespace Studie1
                             remaining.Remove(skeleton.TrackingId);
                             if (!lastUsers.Contains(skeleton.TrackingId))
                             {
-                                this.userEntered(skeleton.TrackingId);
+                                this.userEntered(skeleton.TrackingId, System.DateTime.Now);
                             }
                         }
 
@@ -85,7 +85,7 @@ namespace Studie1
 
                         foreach (int id in remaining)
                         {
-                            this.userLeft(id);
+                            this.userLeft(id, System.DateTime.Now);
                         }
 
                         if (count > 0)
@@ -97,12 +97,12 @@ namespace Studie1
             }
         }
 
-        private void userLeft(int id)
+        private void userLeft(int id, DateTime time)
         {
             System.Console.WriteLine("User left: " + id);
         }
 
-        private void userEntered(int id)
+        private void userEntered(int id, DateTime time)
         {
             System.Console.WriteLine("User entered: " + id);
         }
