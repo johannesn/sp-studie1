@@ -39,6 +39,7 @@ namespace Studie1
             lastUsers = new List<int>();
 
             logger = new Logger();
+            logger.RunWorkerAsync();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
