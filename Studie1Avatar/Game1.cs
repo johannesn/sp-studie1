@@ -41,7 +41,7 @@ namespace Studie1Avatar
         /// </summary>
         protected override void Initialize()
         {
-            quad = new Quad(new Vector3(-0.8f, 0.0f, 2.4f), Vector3.Left, Vector3.Up, 100.0f / 1090.0f, 100.0f / 1090.0f);
+            quad = new Quad(new Vector3(-0.8f, 0.0f, 2.4f), Vector3.Left, Vector3.Up, 300.0f / 1920.0f, 300.0f / 1920.0f);
             View = Matrix.CreateLookAt(new Vector3(quad.Origin.X+2, quad.Origin.Y, quad.Origin.Z), quad.Origin,
                 Vector3.Up);
             Projection = Matrix.CreatePerspectiveFieldOfView(
