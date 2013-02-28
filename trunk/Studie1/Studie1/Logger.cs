@@ -51,6 +51,7 @@ namespace Studie1
         public Logger()
         {
             file = new StreamWriter(@"Log"+System.DateTime.Now.ToShortDateString()+System.DateTime.Now.ToShortTimeString()+".txt");
+            this.rows = new List<Row>();
         }
 
         public void addRow(AttractionTypes type, int id, DateTime time, bool entered)
