@@ -42,6 +42,12 @@ namespace Studie1
             logger.RunWorkerAsync();
         }
 
+        protected override void OnClosed(EventArgs e)
+        {
+            logger.CancelAsync();
+            base.OnClosed(e);
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             kinect = KinectSensor.KinectSensors.FirstOrDefault(s => s.Status == KinectStatus.Connected); // Get first Kinect Sensor
@@ -92,10 +98,7 @@ namespace Studie1
                             this.userLeft(id, System.DateTime.Now);
                         }
 
-                        if (count > 0)
-                        {
-                            triggerable.triggerAction(skeletons);
-                        }
+                        triggerable.triggerAction(skeletons);
                     }
                 }
             }
@@ -174,10 +177,10 @@ namespace Studie1
             }
             else
             {
+                attractionType = AttractionTypes.AVATAR;
                 Avatar game = new Avatar();
                 this.triggerable = game;
                 game.Run();
-                attractionType = AttractionTypes.AVATAR;
             }
         }
 

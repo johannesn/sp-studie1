@@ -25,8 +25,8 @@ namespace Studie1
 
         public String getString()
         {
-            // id; attraction type; enter time; exit time
-            return id + ";" + getTypeString(type) + ";" + (entered ? time.ToShortTimeString() : "") + ";" + (!entered ? time.ToShortTimeString() : "");
+            // attraction type; id; enter time; exit time
+            return getTypeString(type) + ";" + id + ";" + (entered ? time.ToShortTimeString() : "") + ";" + (!entered ? time.ToShortTimeString() : "");
         }
 
         public String getTypeString(AttractionTypes type)
@@ -50,37 +50,39 @@ namespace Studie1
 
         public Logger()
         {
-            file = new StreamWriter(@"Log"+System.DateTime.Now.ToShortDateString()+System.DateTime.Now.ToShortTimeString()+".txt");
+            String path = Directory.GetCurrentDirectory() + "\\Log " + System.DateTime.Now.ToShortDateString() + " " + System.DateTime.Now.ToShortTimeString().Replace(':', '.') + ".txt";
+            System.Console.WriteLine(path);
+            file = new StreamWriter(@path);
             this.rows = new List<Row>();
         }
 
         public void addRow(AttractionTypes type, int id, DateTime time, bool entered)
         {
-            lock(this.rows)
-            {
-                this.rows.Add(new Row(id,time,type,entered));
-                Monitor.PulseAll(this.rows);
-            }
+            Monitor.Enter(this.rows);
+            this.rows.Add(new Row(id, time, type, entered));
+            Monitor.PulseAll(this.rows);
+            Monitor.Exit(this.rows);
         }
 
-        protected override void OnDoWork(DoWorkEventArgs e)
+        protected override void  OnDoWork(DoWorkEventArgs e)
         {
             List<Row> writingRows = new List<Row>();
             while (!CancellationPending)
             {
-                lock (this.rows)
+                Monitor.Enter(this.rows);
+                while(this.rows.Count <= 0 && !CancellationPending)
                 {
-                    if (this.rows.Count <= 0)
-                    {
-                        Monitor.Wait(this.rows);
-                    }
-                    writingRows.AddRange(this.rows);
-                    this.rows.RemoveRange(0, this.rows.Count);
+                    Monitor.Wait(this.rows);
                 }
+                writingRows.AddRange(this.rows);
+                this.rows.RemoveRange(0, this.rows.Count);
+                Monitor.Exit(this.rows);
                 foreach (Row row in writingRows)
                 {
                     file.WriteLine(row.getString());
                 }
+                writingRows.RemoveRange(0, writingRows.Count);
+                file.Flush();
             }
         }
     }
