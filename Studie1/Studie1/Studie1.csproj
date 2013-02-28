@@ -126,6 +126,9 @@
     <Compile Include="Auditiv.xaml.cs">
       <DependentUpon>Auditiv.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Logger.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Static.xaml.cs">
       <DependentUpon>Static.xaml</DependentUpon>
     </Compile>
