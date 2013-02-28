@@ -74,6 +74,7 @@ namespace Studie1
                         Monitor.Wait(this.rows);
                     }
                     writingRows.AddRange(this.rows);
+                    this.rows.RemoveRange(0, this.rows.Count);
                 }
                 foreach (Row row in writingRows)
                 {
