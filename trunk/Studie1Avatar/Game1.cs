@@ -117,7 +117,7 @@ namespace Studie1Avatar
             {
                 Vector3 person = persons.First<Vector3>();
                 Vector3 display_to_person = -1 * (quad.Origin - person);
-                System.Console.WriteLine(quad.Origin + " " + person + " " + display_to_person);
+                //System.Console.WriteLine(quad.Origin + " " + person + " " + display_to_person);
                 display_to_person.Normalize();
                 /* Vector2 ptod_xz = new Vector2(ptod.X, ptod.Z);
                 float a = (float)(Math.PI / 2 - Math.Cos(-ptod.Z) / ptod_xz.Length());
