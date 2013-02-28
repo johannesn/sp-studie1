@@ -21,11 +21,11 @@ namespace Studie1Avatar
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        static const int width = 1920;
-        static const int height = 1920;
-        static const float smileyWidth = 300.0f / width;
-        static const float smileyHeight = 300.0f / width;
-        static const Vector3 displayOrigin = new Vector3(-0.8f, 0.0f, 2.4f);
+        const int width = 1920;
+        const int height = 1920;
+        const float smileyWidth = 300.0f / width;
+        const float smileyHeight = 300.0f / width;
+        Vector3 displayOrigin = new Vector3(-0.8f, 0.0f, 2.4f);
 
 
         public Avatar()
@@ -120,7 +120,7 @@ namespace Studie1Avatar
                 float smileyOffset = simleyRegionWidth / 2;
                 foreach (Vector3 person in persons)
                 {
-                    Vector3 smileyOrigin = new Vector3(Avatar.displayOrigin.X, Avatar.displayOrigin.Y, Avatar.displayOrigin.Z + simleyRegionWidth * smileyIndex + smileyOffset);
+                    Vector3 smileyOrigin = new Vector3(displayOrigin.X, displayOrigin.Y,displayOrigin.Z + simleyRegionWidth * smileyIndex + smileyOffset);
                     Vector3 display_to_person = -1 * (smileyOrigin - person);
                     smileys.Add(new Quad(smileyOrigin, display_to_person, Vector3.Up, Avatar.smileyWidth, Avatar.smileyHeight));
 
