@@ -21,11 +21,12 @@ namespace Studie1Avatar
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        const int width = 1920;
-        const int height = 1080;
-        const float smileyWidth = 300.0f / width;
-        const float smileyHeight = 300.0f / width;
-        Vector3 displayOrigin = new Vector3(-0.8f, 0.0f, 2.4f);
+        const int width = 1440;
+        const int height = 900;
+        const float smileyY = 55.0f / height;
+        const float smileyWidth = 300.0f / height;
+        const float smileyHeight = 300.0f / height;
+        Vector3 displayOrigin = new Vector3(-1.5f, 0.0f, 2.3f);
 
 
         public Avatar()
@@ -54,7 +55,7 @@ namespace Studie1Avatar
             View = Matrix.CreateLookAt(new Vector3(displayOrigin.X + 0.5f, displayOrigin.Y, displayOrigin.Z), displayOrigin,
                 Vector3.Up);
             Projection = Matrix.CreatePerspectiveFieldOfView(
-                MathHelper.PiOver4, 4.0f / 3.0f, 0.1f, 10.0f);
+                MathHelper.PiOver2, 16.0f / 9.0f, 0.1f, 10.0f);
             World = Matrix.Identity;
 
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
@@ -116,11 +117,11 @@ namespace Studie1Avatar
             if (persons.Count > 0)
             {
                 int smileyIndex = 0;
-                float simleyRegionWidth = 1.0f / (float)persons.Count;
-                float smileyOffset = displayOrigin.Z + 0.5f - simleyRegionWidth / 2.0f;
+                float simleyRegionWidth = 1.0f * 16.0f / 9.0f / (float)persons.Count;
+                float smileyOffset = displayOrigin.Z + 0.5f * 16.0f / 9.0f - simleyRegionWidth / 2.0f;
                 foreach (Vector3 person in persons)
                 {
-                    Vector3 smileyOrigin = new Vector3(displayOrigin.X, displayOrigin.Y, smileyOffset - simleyRegionWidth * (float)smileyIndex);
+                    Vector3 smileyOrigin = new Vector3(displayOrigin.X, smileyY + displayOrigin.Y, smileyOffset - simleyRegionWidth * (float)smileyIndex);
                     Vector3 display_to_person = -1 * (smileyOrigin - person);
                     display_to_person.Normalize();
                     Vector3 up = Vector3.Cross(display_to_person, Vector3.Forward);
