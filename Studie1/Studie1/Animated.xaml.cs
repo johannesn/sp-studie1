@@ -50,7 +50,9 @@ namespace Studie1
 
         private void mouseDown(object sender, MouseButtonEventArgs e)
         {
-            triggerAction(null);
+            List<Skeleton> list = new List<Skeleton>();
+            list.Add(new Skeleton());
+            triggerAction(list);
         }
     }
 }
