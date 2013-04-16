@@ -23,7 +23,7 @@ namespace Studie1Avatar
         SpriteBatch spriteBatch;
         const int width = 1920;
         const int height = 1080;
-        const float smileyWidth = 1.0f/3.0f*16.0f/9.0f;
+        const float smileyWidth = 0.7f/3.0f*16.0f/9.0f;
         const float smileyHeight = smileyWidth/4.0f;
         Vector3 displayOrigin = new Vector3(-0.8f, 0.0f, 2.4f);
         Vector3 displayRight = Vector3.Forward+Vector3.Right;
@@ -64,6 +64,8 @@ namespace Studie1Avatar
             Projection = Matrix.CreatePerspectiveFieldOfView(
                 MathHelper.PiOver2, 16.0f / 9.0f, 0.1f, 10.0f);
             World = Matrix.Identity;
+
+            displayRight.Normalize();
 
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
 
@@ -131,9 +133,61 @@ namespace Studie1Avatar
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            //Vector3 cameraPosition = Vector3.Cross(displayRight, Vector3.Up);
+            //cameraPosition.Normalize();
+            //cameraPosition = cameraPosition / 2;
+            //Vector3 viewpoint = displayOrigin + cameraPosition;
+
             // Allows the game to exit
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
                 this.Exit();
+            }
+            /*else if (Keyboard.GetState().IsKeyDown(Keys.D1))
+            {
+                this.persons.RemoveRange(0,persons.Count);
+                this.persons.Add(viewpoint);
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.D2))
+            {
+                this.persons.RemoveRange(0, persons.Count);
+                this.persons.Add(viewpoint);
+                this.persons.Add(viewpoint);
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.D3))
+            {
+                this.persons.RemoveRange(0, persons.Count);
+                this.persons.Add(viewpoint);
+                this.persons.Add(viewpoint);
+                this.persons.Add(viewpoint);
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.D4))
+            {
+                this.persons.RemoveRange(0, persons.Count);
+                this.persons.Add(viewpoint);
+                this.persons.Add(viewpoint);
+                this.persons.Add(viewpoint);
+                this.persons.Add(viewpoint);
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.D5))
+            {
+                this.persons.RemoveRange(0, persons.Count);
+                this.persons.Add(viewpoint);
+                this.persons.Add(viewpoint);
+                this.persons.Add(viewpoint);
+                this.persons.Add(viewpoint);
+                this.persons.Add(viewpoint);
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.D6))
+            {
+                this.persons.RemoveRange(0, persons.Count);
+                this.persons.Add(viewpoint);
+                this.persons.Add(viewpoint);
+                this.persons.Add(viewpoint);
+                this.persons.Add(viewpoint);
+                this.persons.Add(viewpoint);
+                this.persons.Add(viewpoint);
+            }*/
 
             smileys.RemoveRange(0, smileys.Count);
             if (persons.Count > 0)
@@ -143,7 +197,7 @@ namespace Studie1Avatar
                 foreach (Vector3 person in persons)
                 {
                     float[] positionOffset = positions[persons.Count-1][smileyIndex];
-                    Vector3 smileyOrigin = displayLeftTop - 650.0f / 1080.0f * positionOffset[0] * Vector3.Up + displayRight * 16.0f / 9.0f * positionOffset[1];
+                    Vector3 smileyOrigin = displayLeftTop - (650.0f / 1080.0f * positionOffset[0]) * Vector3.Up + displayRight * (16.0f / 9.0f * positionOffset[1]);
                     Vector3 display_to_person = -1 * (smileyOrigin - person);
                     display_to_person.Normalize();
                     Vector3 up = Vector3.Cross(display_to_person, displayRight);
