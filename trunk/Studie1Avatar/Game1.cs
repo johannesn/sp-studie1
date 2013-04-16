@@ -21,13 +21,19 @@ namespace Studie1Avatar
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        const int width = 1440;
-        const int height = 900;
-        const float smileyY = 55.0f / height;
-        const float smileyWidth = 300.0f / height;
-        const float smileyHeight = 300.0f / height;
-        Vector3 displayOrigin = new Vector3(-1.5f, 0.0f, 2.3f);
-
+        const int width = 1920;
+        const int height = 1080;
+        const float smileyWidth = 1.0f/3.0f*16.0f/9.0f;
+        const float smileyHeight = smileyWidth/4.0f;
+        Vector3 displayOrigin = new Vector3(-0.8f, 0.0f, 2.4f);
+        Vector3 displayRight = Vector3.Forward+Vector3.Right;
+        const float smileyY = 215.0f / height;
+        List<Quad> smileys;
+        Matrix View, Projection, World;
+        Texture2D[] texture;
+        Texture2D background;
+        BasicEffect[] quadEffect;
+        Rectangle borders;
 
         public Avatar()
         {
@@ -42,8 +48,6 @@ namespace Studie1Avatar
             Content.RootDirectory = "Content";
         }
 
-        List<Quad> smileys;
-        Matrix View, Projection, World;
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -52,7 +56,10 @@ namespace Studie1Avatar
         /// </summary>
         protected override void Initialize()
         {
-            View = Matrix.CreateLookAt(new Vector3(displayOrigin.X + 0.5f, displayOrigin.Y, displayOrigin.Z), displayOrigin,
+            Vector3 cameraPosition = Vector3.Cross(displayRight, Vector3.Up);
+            cameraPosition.Normalize();
+            cameraPosition = cameraPosition / 2;
+            View = Matrix.CreateLookAt(displayOrigin+cameraPosition, displayOrigin,
                 Vector3.Up);
             Projection = Matrix.CreatePerspectiveFieldOfView(
                 MathHelper.PiOver2, 16.0f / 9.0f, 0.1f, 10.0f);
@@ -63,10 +70,6 @@ namespace Studie1Avatar
             base.Initialize();
         }
 
-        Texture2D texture;
-        Texture2D background;
-        BasicEffect quadEffect;
-        Rectangle borders;
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
@@ -76,18 +79,28 @@ namespace Studie1Avatar
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            texture = Content.Load<Texture2D>("face");
+            texture = new Texture2D[4];
+            texture[0] = Content.Load<Texture2D>("snickers");
+            texture[1] = Content.Load<Texture2D>("mars");
+            texture[2] = Content.Load<Texture2D>("twix");
+            texture[3] = Content.Load<Texture2D>("milkyway");
 
-            quadEffect = new BasicEffect(graphics.GraphicsDevice);
+            quadEffect = new BasicEffect[4];
+            
+            for(int i = 0; i<texture.Length; i++) {
+                quadEffect[i] = new BasicEffect(graphics.GraphicsDevice);
 
-            quadEffect.World = World;
-            quadEffect.View = View;
-            quadEffect.Projection = Projection;
-            quadEffect.TextureEnabled = true;
-            quadEffect.Texture = texture;
-            quadEffect.VertexColorEnabled = false;
+                quadEffect[i].World = World;
+                quadEffect[i].View = View;
+                quadEffect[i].Projection = Projection;
+                quadEffect[i].TextureEnabled = true;
+                quadEffect[i].Texture = texture[i];
+                quadEffect[i].VertexColorEnabled = false;
+            }
 
-            background = Content.Load<Texture2D>("avatar_bg");
+            // 650
+
+            background = Content.Load<Texture2D>("avatar_bg_v2");
             int screenWidth = graphics.GraphicsDevice.PresentationParameters.BackBufferWidth;
             int screenHeight = graphics.GraphicsDevice.PresentationParameters.BackBufferHeight;
             borders = new Rectangle(0, 0, screenWidth, screenHeight);
@@ -101,6 +114,15 @@ namespace Studie1Avatar
         {
             // TODO: Unload any non ContentManager content here
         }
+
+        float[][][] positions = new float[][][]{
+            new float[][]{ new float[]{0.5f, 0.5f}},
+            new float[][]{ new float[]{0.25f, 0.75f}, new float[]{0.75f, 0.25f}}, 
+            new float[][]{ new float[]{0.25f, 0.25f}, new float[]{0.25f, 0.75f}, new float[]{0.75f, 0.5f}}, 
+            new float[][]{ new float[]{0.25f, 0.25f}, new float[]{0.25f, 0.75f}, new float[]{0.75f, 0.25f}, new float[]{0.75f, 0.75f}}, 
+            new float[][]{ new float[]{0.25f, 0.25f}, new float[]{0.25f, 0.75f}, new float[]{0.75f, 1.0f/6.0f}, new float[]{0.75f, 3.0f/6.0f}, new float[]{0.75f, 5.0f/6.0f}}, 
+            new float[][]{ new float[]{0.25f, 1.0f/6.0f}, new float[]{0.25f, 3.0f/6.0f}, new float[]{0.25f, 5.0f/6.0f}, new float[]{0.75f, 1.0f/6.0f}, new float[]{0.75f, 3.0f/6.0f}, new float[]{0.75f, 5.0f/6.0f}}
+        };
 
         /// <summary>
         /// Allows the game to run logic such as updating the world,
@@ -116,15 +138,15 @@ namespace Studie1Avatar
             smileys.RemoveRange(0, smileys.Count);
             if (persons.Count > 0)
             {
+                Vector3 displayLeftTop = displayOrigin - 0.5f * 16.0f / 9.0f * displayRight + 0.5f * Vector3.Up;
                 int smileyIndex = 0;
-                float simleyRegionWidth = 1.0f * 16.0f / 9.0f / (float)persons.Count;
-                float smileyOffset = displayOrigin.Z + 0.5f * 16.0f / 9.0f - simleyRegionWidth / 2.0f;
                 foreach (Vector3 person in persons)
                 {
-                    Vector3 smileyOrigin = new Vector3(displayOrigin.X, smileyY + displayOrigin.Y, smileyOffset - simleyRegionWidth * (float)smileyIndex);
+                    float[] positionOffset = positions[persons.Count-1][smileyIndex];
+                    Vector3 smileyOrigin = displayLeftTop - 650.0f / 1080.0f * positionOffset[0] * Vector3.Up + displayRight * 16.0f / 9.0f * positionOffset[1];
                     Vector3 display_to_person = -1 * (smileyOrigin - person);
                     display_to_person.Normalize();
-                    Vector3 up = Vector3.Cross(display_to_person, Vector3.Forward);
+                    Vector3 up = Vector3.Cross(display_to_person, displayRight);
                     up.Normalize();
                     smileys.Add(new Quad(smileyOrigin, display_to_person, up, Avatar.smileyWidth, Avatar.smileyHeight));
                     smileyIndex++;
@@ -147,11 +169,9 @@ namespace Studie1Avatar
             spriteBatch.Draw(background, borders, Color.White);
             spriteBatch.End();
 
-
-
             foreach (Quad smiley in smileys)
             {
-                foreach (EffectPass pass in quadEffect.CurrentTechnique.Passes)
+                foreach (EffectPass pass in quadEffect[smileys.IndexOf(smiley) % 4].CurrentTechnique.Passes)
                 {
                     pass.Apply();
 
