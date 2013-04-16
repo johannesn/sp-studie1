@@ -68,5 +68,14 @@ namespace Studie1.Properties {
                 return ResourceManager.GetStream("greeting", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.IO.UnmanagedMemoryStream ähnlich wie System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream greeting_v2 {
+            get {
+                return ResourceManager.GetStream("greeting_v2", resourceCulture);
+            }
+        }
     }
 }
