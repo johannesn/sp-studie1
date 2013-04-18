@@ -42,14 +42,14 @@ namespace Studie1
 
         private void mouseButtonDown(object sender, MouseButtonEventArgs e)
         {
-            List<Skeleton> list = new List<Skeleton>();
-            list.Add(new Skeleton());
-            triggerAction(list);
+            List<Skeleton> data = new List<Skeleton>();
+            data.Add(new Skeleton());
+            triggerAction(data);
         }
 
         private void playSound()
         {
-            Stream audioStream = Properties.Resources.greeting_v2;
+            Stream audioStream = Properties.Resources.greeting;
             audioStream.Position = 0;
             SoundPlayer simpleSound = new SoundPlayer(audioStream);
             simpleSound.PlaySync();

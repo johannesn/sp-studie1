@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Static Content" ResizeMode="NoResize" WindowState="Maximized" WindowStyle="None">
     <Window.Resources>
-        <Storyboard x:Key="storyboard" BeginTime="0:0:2">
+        <Storyboard x:Key="storyboard" BeginTime="0:0:0">
             <DoubleAnimation From="0" To="-10" Duration="0:0:0.1" Storyboard.TargetName="mars" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
             <DoubleAnimation From="0" To="-10" Duration="0:0:0.1" Storyboard.TargetName="snickers" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>
             <DoubleAnimation From="0" To="-10" Duration="0:0:0.1" Storyboard.TargetName="milkyway" Storyboard.TargetProperty="(Image.LayoutTransform).(RotateTransform.Angle)"></DoubleAnimation>

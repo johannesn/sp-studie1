@@ -200,7 +200,7 @@
     <None Include="Resources\greeting.wav" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\WindowsGame3\WindowsGame3\WindowsGame3\Studie1Avatar.csproj">
+    <ProjectReference Include="..\..\..\Studie1Avatar\Studie1Avatar.csproj">
       <Project>{C56AE99F-9A13-4C88-A188-5316585B7B8B}</Project>
       <Name>Studie1Avatar</Name>
     </ProjectReference>
