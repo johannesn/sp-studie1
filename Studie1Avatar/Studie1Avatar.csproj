@@ -121,11 +121,11 @@
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Studie1\ClassLibrary1\Schnittstellen.csproj">
+    <ProjectReference Include="..\Studie1\Studie1\ClassLibrary1\Schnittstellen.csproj">
       <Project>{1E450ECC-B127-47B5-8557-C676BD56FE76}</Project>
       <Name>Schnittstellen</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WindowsGame3Content\Studie1AvatarContent.contentproj">
+    <ProjectReference Include="..\Studie1AvatarContent\Studie1AvatarContent.contentproj">
       <Name>Studie1AvatarContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
       <Project>{7638FE02-3F3B-4D49-A9E5-F26C83F7B269}</Project>

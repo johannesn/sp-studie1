@@ -25,8 +25,8 @@ namespace Studie1Avatar
         const int height = 1080;
         const float smileyWidth = 0.7f/3.0f*16.0f/9.0f;
         const float smileyHeight = smileyWidth/4.0f;
-        Vector3 displayOrigin = new Vector3(-0.8f, 0.0f, 2.4f);
-        Vector3 displayRight = Vector3.Forward+Vector3.Right;
+        Vector3 displayOrigin = new Vector3(-1.352501f, -0.1293522f, 2.629021f);
+        Vector3 displayRight = Vector3.Forward-Vector3.Right;
         const float smileyY = 215.0f / height;
         List<Quad> smileys;
         Matrix View, Projection, World;
@@ -43,7 +43,7 @@ namespace Studie1Avatar
 
             smileys = new List<Quad>();
             persons = new List<Vector3>();
-
+            
             this.graphics.IsFullScreen = true;
             Content.RootDirectory = "Content";
         }
@@ -66,6 +66,9 @@ namespace Studie1Avatar
             World = Matrix.Identity;
 
             displayRight.Normalize();
+
+            Vector3 viewpoint = displayOrigin + cameraPosition;
+            this.persons.Add(viewpoint);
 
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
 
@@ -244,6 +247,11 @@ namespace Studie1Avatar
         public void triggerAction(List<Skeleton> skeletonData)
         {
             persons.RemoveRange(0, persons.Count);
+            Vector3 cameraPosition = Vector3.Cross(displayRight, Vector3.Up);
+            cameraPosition.Normalize();
+            cameraPosition = cameraPosition / 2;
+            Vector3 viewpoint = displayOrigin + cameraPosition;
+            this.persons.Add(viewpoint);
             foreach (Skeleton s in skeletonData)
             {
                 if (s.Joints[JointType.Head].TrackingState == JointTrackingState.Tracked || s.Joints[JointType.Head].TrackingState == JointTrackingState.Inferred)
@@ -254,6 +262,7 @@ namespace Studie1Avatar
                 {
                     persons.Add(new Vector3(s.Position.X, s.Position.Y * 2, s.Position.Z));
                 }
+                //System.Console.WriteLine(s.Position.X+" "+s.Position.Y + " " + s.Position.Z);
             }
         }
     }
